@@ -1,0 +1,16 @@
+services:
+  
+  FLASK-MODEL-SERVICE: 
+    image: baseImage
+    ports:
+      - "8080:80"
+    volumes:
+      - hostPath:containerPath:ro
+  
+  FLASK-APP: 
+    image: baseImage
+    ports:
+      - "8080:80"
+    volumes:
+      - hostPath:containerPath:ro
+  
