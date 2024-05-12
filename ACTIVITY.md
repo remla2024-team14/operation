@@ -29,7 +29,7 @@ Approved PR: https://github.com/nadinekuo/URL-Fishing-CS4295/pull/1
 
 Created PR: https://github.com/remla2024-team14/model-service/pull/3
 
-Approved PR: https://github.com/remla2024-team14/model-training/pull/2
+Approved PR: ttps://github.com/remla2024-team14/lib-ml/pull/1
 
 -- Justin: --
 
@@ -40,7 +40,7 @@ Approved PR: https://github.com/remla2024-team14/model-service/pull/3
 
 -- Li Yang: --
 
-Created PR: https://github.com/remla2024-team14/model-training/pull/2
+Created PR: https://github.com/remla2024-team14/model-training/pull/2 and https://github.com/remla2024-team14/lib-ml/pull/1
 
 Approved PR: https://github.com/remla2024-team14/operation/pull/1
 
