@@ -1,16 +1,23 @@
+version: '3'
+
 services:
   
-  FLASK-MODEL-SERVICE: 
-    image: baseImage
-    ports:
-      - "8080:80"
+  model-service: 
+    image: python:3.12-slim-bookworm
+    # build: ./model-service
+    # The volumes mapping ensures that changes to your application code are reflected in real-time within the container.
     volumes:
-      - hostPath:containerPath:ro
-  
-  FLASK-APP: 
-    image: baseImage
+      - ./model-service:/usr/src/app
     ports:
-      - "8080:80"
-    volumes:
-      - hostPath:containerPath:ro
+      - "8080:5000"
   
+  app: 
+    image: python:3.12-slim-bookworm
+    volumes:
+      - ./app:/usr/src/app
+    ports:
+      - "3000:8000"
+    environment:
+      - MODEL_SERVICE_URL=http://0.0.0.0:5000/predict
+    depends_on:
+      - model-service
