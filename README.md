@@ -37,3 +37,13 @@ For further details about the respective repositories, please navigate to their 
 ## How to: Start the Application
 
 - Parameters, vars, requirements
+
+![alt text](images/app-interface.png)
+
+Upon running `docker ps`, you will see the following two containers being active:
+
+```
+CONTAINER ID   IMAGE                     COMMAND           CREATED          STATUS          PORTS                    NAMES
+a7988dbfb1c6   operation-app             "python app.py"   35 seconds ago   Up 34 seconds   0.0.0.0:3000->8000/tcp   operation-app-1
+ea97335d9dfd   operation-model-service   "flask run"       36 seconds ago   Up 34 seconds   0.0.0.0:5001->5000/tcp   operation-model-service-1
+```
