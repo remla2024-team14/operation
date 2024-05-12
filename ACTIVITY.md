@@ -6,9 +6,9 @@ Approved PR: https://github.com/nadinekuo/URL-Fishing-CS4295/pull/6
 
 -- Justin: --
 
-Created PR: test
+Created PR: https://github.com/nadinekuo/URL-Fishing-CS4295/pull/6
 
-Approved PR: ---
+Approved PR: https://github.com/nadinekuo/URL-Fishing-CS4295/pull/8
 
 -- Yang Li: --
 
@@ -26,20 +26,30 @@ Approved PR: https://github.com/nadinekuo/URL-Fishing-CS4295/pull/1
 # A2: Images, Releases and Provisioning (30%)
 
 -- Dani: --
-Created PR: ...
-Approved PR: ...
+
+Created PR: https://github.com/remla2024-team14/model-service/pull/3
+
+Approved PR: https://github.com/remla2024-team14/model-training/pull/2
 
 -- Justin: --
-Created PR: ...
-Approved PR: ...
+
+Created PR: https://github.com/remla2024-team14/app/pull/1 and 
+https://github.com/remla2024-team14/lib-version/pull/1
+
+Approved PR: https://github.com/remla2024-team14/model-service/pull/3
 
 -- Li Yang: --
-Created PR: ...
-Approved PR: ...
+
+Created PR: https://github.com/remla2024-team14/model-training/pull/2
+
+Approved PR: https://github.com/remla2024-team14/operation/pull/1
 
 -- Nadine: --
-Created PR: ...
-Approved PR: ...
+
+Created PR: https://github.com/remla2024-team14/operation/pull/1
+
+Approved PR: https://github.com/remla2024-team14/app/pull/1 and 
+https://github.com/remla2024-team14/lib-version/pull/1
 
 
 # A3: Operate a Webapp (10%)
