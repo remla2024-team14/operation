@@ -8,13 +8,13 @@ services:
     volumes:
       - ./model-service:/usr/src/app
     ports:
-      - "5000:5000"
+      - "4000:5000"
   
   app: 
     build: ./app
     volumes:
       - ./app:/usr/src/app
     ports:
-      - "8000:8000"
+      - "3000:8000"
     depends_on:
       - model-service

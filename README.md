@@ -127,3 +127,5 @@ Now when you navigate to your localhost that serves the `app`, you see the UI of
 ![alt text](images/app-interface.png)
 
 In the form above, users can enter a URL to check, as well as select a model of choice.
+
+To stop the application, use `docker-compose down`.
