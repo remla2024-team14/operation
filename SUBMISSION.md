@@ -1,4 +1,32 @@
-# Submission Document A1
+# Submission Document
+
+
+
+<!-- ## A5: Istio Service Mesh
+
+
+## A4: ML Testing
+
+
+## A3: Operate a Webapp -->
+
+
+## A2: Images, Releases and Provisioning
+
+operation: ...
+
+- Model training: ...
+- Model service: ...
+- App: ...
+- Lib-ML: ...
+- Lib-version: ...
+
+Notes:
+- See the README inside the `operation` repo for high-level project information and instructions on how to get the app running with Docker-compose
+- See the READMEs of the other repositories for specific information
+- The following sub-tasks have not been implemented: Swagger
+
+## A1: ML Config Management
 
 operation: https://github.com/nadinekuo/URL-Fishing-CS4295/tree/v0.0.1
 
