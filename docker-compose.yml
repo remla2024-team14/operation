@@ -17,6 +17,6 @@ services:
     ports:
       - "3000:8000"
     environment:
-      - MODEL_SERVICE_URL=http://127.0.0.1:5000/predict
+      - MODEL_SERVICE_URL=http://model-service:5000/predict
     depends_on:
       - model-service
