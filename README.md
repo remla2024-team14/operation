@@ -108,6 +108,7 @@ operation
 From your project's root, simply run the commands below. This is the power of Docker Compose!
 
 ```
+docker-compose build     # In case the Dockerfiles have been modified
 docker-compose up -d
 ```
 
