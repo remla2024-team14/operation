@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  
+  model-service:
+    build: ./model-service
+    # The volumes mapping ensures that changes to your application code are reflected in real-time within the container.
+    volumes:
+      - ./model-service:/usr/src/app
+    ports:
+      - "4000:5000"
+  
+  app: 
+    build: ./app
+    volumes:
+      - ./app:/usr/src/app
+    ports:
+      - "3000:8000"
+    depends_on:
+      - model-service
