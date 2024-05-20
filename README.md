@@ -103,7 +103,7 @@ operation
 ```
 
 
-## How to: Start the Application
+## How to: Start the Application using Docker Compose
 
 From your project's root, simply run the commands below. This is the power of Docker Compose!
 
@@ -130,3 +130,27 @@ Now when you navigate to your localhost (e.g. `http://localhost:3000/`) that ser
 In the form above, users can enter a URL to check, as well as select a model of choice.
 
 To stop the application, use `docker-compose down`.
+
+
+## How to: Start the Application using Kubernetes
+
+Firstly, run `eval $(minikube docker-env)` in your terminal to use the Minikube docker-env for the current session. 
+
+Now, build the *operation-app* and *operation-model-service* images inside this environment in order to allow for the images to be pulled by Kubernetes. This is similar to what we did above:
+
+```
+docker-compose build
+```
+
+Next, use Kubectl to apply our deployment YAML file defining our Deployments, Services and Ingress.
+
+```
+kubectl apply -f urlfishing.yml
+```
+
+
+In your Minikube dashboard (`minikube dashboard`), the following Deployments and Pods should be visible:
+
+![alt text](images/minikube-deployments.png)
+
+![alt text](images/minikube-pods.png)

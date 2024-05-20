@@ -1,0 +1,91 @@
+apiVersion: apps/v1
+kind: Deployment    # Create deployment for image operation-model-service
+metadata: 
+  name: fishing-model-depl
+  labels: 
+    app: fishing-model
+spec: 
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fishing-model
+  template:
+    metadata: 
+      labels:
+        app: fishing-model
+    spec:
+      containers:
+      - name: fishing-model
+        image: operation-model-service  # TODO: create predefined image?
+        imagePullPolicy: Never  
+        ports:
+        - containerPort: 4000
+---
+apiVersion: v1    # Create service for image operation-model-service
+kind: Service
+metadata: 
+  name: fishing-model-serv
+spec: 
+  selector: 
+    app: fishing-model       # App defined in Deployment above
+  ports: 
+    - port: 4000
+      targetPort: 4000
+---
+apiVersion: apps/v1     # Create deployment for image operation-app
+kind: Deployment
+metadata: 
+  name: fishing-web-depl 
+  labels: 
+    app: fishing-web
+spec: 
+  replicas: 1
+  selector: 
+    matchLabels: 
+      app: fishing-web
+  template: 
+    metadata: 
+      labels: 
+        app: fishing-web
+    spec: 
+      containers: 
+      - name: fishing-web 
+        image: operation-model-service
+        imagePullPolicy: Never
+        ports: 
+        - containerPort: 3000
+        env: 
+          - name: MODEL_HOST
+            valueFrom:
+              configMapKeyRef: 
+                name: my-config   # See ConfigMap defined at bottom
+                key: model.host
+---
+apiVersion: v1     # Create service for image operation-app
+kind: Service
+metadata: 
+  name: sms-web-serv
+spec:
+  selector: 
+    app: sms-web   # App defined in Deployment above
+  ports: 
+    - port: 3000
+      targetPort: 3000
+---
+apiVersion: networking.k8s.io/v1   # Create an Ingress for the application (to expose the ClusterIP service)
+kind: Ingress
+metadata: 
+  name: my-ingress
+spec: 
+  defaultBackend:
+    service: 
+      name: fishing-web-serv 
+      port: 
+        number: 3000
+---
+apiVersion: v1   # Create a ConfigMap and introduce the required env vars in the "app" deployment
+kind: ConfigMap
+metadata: 
+  name: my-config
+data:
+  model.host: "http://fishing-model-serv:5000/predict"
