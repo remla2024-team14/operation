@@ -154,3 +154,9 @@ In your Minikube dashboard (`minikube dashboard`), the following Deployments and
 ![alt text](images/minikube-deployments.png)
 
 ![alt text](images/minikube-pods.png)
+
+To delete all resources from the cluster, run the following:
+
+```
+kubectl delete -f environment.yml
+```
