@@ -225,3 +225,10 @@ To clean up your resources, run:
 ```
 helm uninstall <YOUR_RELEASE_NAME>
 ```
+
+## How to: Run Prometheus and Grafana Locally
+
+To run Prometheus locally without Helm, you need to make sure Prometheus is installed, then run `prometheus.exe --config.file=prometheus.yml`.
+
+To run Grafana locally, just download it and it will continually run on your localhost on port 3000 (use a browser to go to 127.0.0.1:3000). 
+Then configure a data source to the port Prometheus is running (by default, localhost:9093) and importing the dashboard JSON located in the path *grafana-dashboards/dashbard.json*.
