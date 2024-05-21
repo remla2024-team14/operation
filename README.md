@@ -252,16 +252,9 @@ This following steps provide a detailed guide to set up a multi-node Kubernetes 
 
 ## Run the Ansible playbooks
 
-Ensure that the inventory.ini file contains the IP addresses or hostnames of the control and worker nodes, and then run the Playbook.
+Ensure that the **inventory.ini** file contains your own **ansible_host** , **ansible_ssh_user** and **ansible_ssh_password** of the control and worker nodes, and then run the Playbook.
 
-```bash
-[controller]
-controller ansible_host=<controller_ip>
-
-[nodes]
-node1 ansible_host=<worker1_ip>
-node2 ansible_host=<worker2_ip>
-```
+*NOTE：If you're not sure what your ansible_host, ansible_ssh_user and ansible_ssh_password are, you can run them using the examples we've given you in inventory.ini and find your own relevant information by following the error prompts.*
 
 Make sure you run the ansible-playbook command in the root directory of your project so that the inventory file and playbook file are referenced correctly.
 
