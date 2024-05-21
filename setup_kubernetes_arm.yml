@@ -1,0 +1,34 @@
+---
+- hosts: controller
+  vars:
+    number_of_workers: 2  #initialize
+  tasks:
+    - name: Install kubectl
+      shell: curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/arm64/kubectl" && sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker repository
+      apt_repository:
+        repo: deb [arch=arm64] https://download.docker.com/linux/ubuntu focal stable
+        state: present
+
+    - name: Install Docker
+      apt:
+        name: docker-ce
+        state: present
+        update_cache: yes
+
+    - name: Install k3d
+      shell: curl -s https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
+
+    - name: Create Kubernetes cluster with k3d
+      shell: k3d cluster create mycluster --servers 1 --agents {{ number_of_workers }} --port "8080:80@loadbalancer"
+
+- hosts: nodes
+  tasks:
+    - name: Install kubectl
+      shell: curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/arm64/kubectl" && sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
