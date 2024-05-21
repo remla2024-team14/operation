@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: fishing-model
-        image: operation-model-service  # TODO: create predefined image?
+        image: operation-model-service  # TODO: use predefined image instead of local? To avoid having to clone app and model-service under operation
         imagePullPolicy: Never  
         ports:
         - containerPort: 4000
