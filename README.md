@@ -57,7 +57,7 @@ _Repository link: https://github.com/remla2024-team14/app_
 
 For further details about the respective repositories, please navigate to their specific project READMEs.
 
-## Installations
+## Getting Started
 
 1. Ensure you have Docker installed: refer to https://docs.docker.com/compose/install/.
 2. Clone this central repository.
@@ -214,16 +214,9 @@ To clean up your resources, run:
 helm uninstall <YOUR_RELEASE_NAME>
 ```
 
-## How to: Run Prometheus and Grafana Locally
 
-To run Prometheus locally without Helm, you need to make sure Prometheus is installed, then run `prometheus.exe --config.file=prometheus.yml`.
 
-To run Grafana locally, just download it and it will continually run on your localhost on port 3000 (use a browser to go to 127.0.0.1:3000).
-Then configure a data source to the port Prometheus is running (by default, localhost:9093) and importing the dashboard JSON located in the path *grafana-dashboards/dashbard.json*.
-
-## Vagrant
-
-_NOTE: unsure if it works for ARM, cause I cannot test it._
+## How to: Setting up Virtual Infrastructure with Vagrant
 
 Make sure you have Vagrant and VirtualBox/VMWare installed.
 Navigate to the Vagrantfile for ARM or x86 (normal) and run `vagrant up` in terminal. It will create 1 controller node and 2 worker nodes.
@@ -231,108 +224,92 @@ IP has been made static for more convenient later use with Kubernetes.
 
 ### Vagrant Config
 
-Controller node IP is:
-
 `CONTROLLER_IP = "192.168.50.10"`
 
 `X = {11, 12}`
+
 `NETWORK_PREFIX = "192.168.50.X"`
 
-Furthermore, the names are "controller", "node1" and "node2". You can run them by using `vagrant ssh <NAME>` from the directory that contains the Vagrantfile.
+Furthermore, the names are *"controller"*, *"node1"* and *"node2"*. 
 
-To test the communication between the VMs I ran all the VMs on different terminals. You can check the IP of the VM by typing `ip address` on their respective terminals. I then pinged every other VM from one of the other VMs using `ping <IP_ADDRESS>` and I did this for all of them. The result from node1 to node2 looks like this: ![image](https://github.com/remla2024-team14/app/assets/72865119/e8be97a1-d1cc-4311-91da-37469c3874a3).
+You can run them by using `vagrant ssh <NAME>` from the directory that contains the Vagrantfile.
+
+To test the communication between VMs (without port-forward), the following steps can be taken:
+- Run all VMs (in different terminals)
+- Check the IPs of the VMs using `ip address`
+- Ping every other VM from one of the other VMs using `ping <IP_ADDRESS>` 
+
+The result from *node1* to *node2* should roughly look like this: 
+
+![image](https://github.com/remla2024-team14/app/assets/72865119/e8be97a1-d1cc-4311-91da-37469c3874a3).
+
+
+## How to: Setting up Software Environment with Ansible
 
 This following steps provide a detailed guide to set up a multi-node Kubernetes cluster using Ansible and k3d, including the installation of Kubernetes Dashboard, Prometheus, and Grafana.
 
-## Prerequisites
-
+### Prerequisites
 - Ansible installed on your local machine
 - k3d installed on your local machine
 - Vagrant installed and configured with the necessary VMs
 
-## Run the Ansible playbooks
+### Running Ansible playbooks
 
-Ensure that the **inventory.ini** file contains your own **ansible_host** , **ansible_ssh_user** and **ansible_ssh_password** of the control and worker nodes, and then run the Playbook.
+Ensure that the **inventory.ini** file contains your own **ansible_host** , **ansible_ssh_user** and **ansible_ssh_password** of the control and worker nodes before running the playbooks.
 
 *NOTE：If you're not sure what your ansible_host, ansible_ssh_user and ansible_ssh_password are, you can run them using the examples we've given you in inventory.ini and find your own relevant information by following the error prompts.*
 
-Make sure you run the ansible-playbook command in the root directory of your project so that the inventory file and playbook file are referenced correctly.
+From the root directory of your project, run:
 
 ```bash
-ansible-playbook -i inventory,ini setup_kubernetes_x86.yml
+ansible-playbook -i inventory.ini setup_kubernetes_x86.yml
 ansible-playbook -i inventory.ini setup_monitoring.yml
 ```
 
-## Configuring kubectl locally
+### Configuring Kubectl Locally
 
-Copy the kubeconfig file for the control node locally, and then set the environment variables so that the local host can access the Kubernetes cluster.
+Copy the kubeconfig file for the control node locally, and then set the environment variables so that the localhost can access the Kubernetes cluster: `scp user@controller:/home/<user>/.kube/config ~/.kube/config`.
 
-```bash
-scp user@controller:/home/<user>/.kube/config ~/.kube/config
-```
+- The user here is the username on the control node
+- Execute the following command on the control node to find the location of the kubeconfig file to modify " /home/\<user>/.kube/config ": `sudo find / -name config`
 
-- The user here is the username on the control node.
-- Execute the following command on the control node to find the location of the kubeconfig file to modify " /home/\<user>/.kube/config "
 
-```bash
-sudo find / -name config
-```
+In order for Kubectl to find and use this kubeconfig file, you need to set the environment variable KUBECONFIG to point to this file: `export KUBECONFIG=~/.kube/config`.
 
-### Setting the environment variable KUBECONFIG
-
-In order for kubectl to find and use this kubeconfig file, you need to set the environment variable KUBECONFIG to point to this file.
-
-```bash
-export KUBECONFIG=~/.kube/config
-```
-
-### Verify that the configuration was successful
-
-You can verify that kubectl is accessing the Kubernetes cluster correctly with the following command.
-
-```bash
-kubectl cluster-info
-```
+You can verify that Kubectl is accessing the Kubernetes cluster correctly with the following command: `kubectl cluster-info`.
 
 ### Testing Connectivity to the Cluster
 
-Further testing to see the status of all nodes.
-
-```bash
-kubectl get nodes
-```
-
+Further testing to see the status of all nodes: `kubectl get nodes`
 If configured correctly, you should see a list of all nodes and their status.
 
-## Accessing Services
 
-### List the services to find the NodePort values
+### Accessing Grafana and Prometheus via VM
 
-```bash
-kubectl get svc -n monitoring
-```
+List the services to find the NodePort values: `kubectl get svc -n monitoring`.
 
-### Access Grafana and Prometheus using the NodePort values
+- Grafana: `http://<node-ip>:<grafana-nodeport>`
+- Prometheus: `http://<node-ip>:<prometheus-nodeport>`
 
-```bash
-Grafana: http://<node-ip>:<grafana-nodeport>
-Prometheus: http://<node-ip>:<prometheus-nodeport>
-```
 
-Replace <node-ip> with the IP address of one of your worker nodes and <grafana-nodeport> and <prometheus-nodeport> with the respective NodePort values from the output of the kubectl get svc command.
+Replace `<node-ip>` with the IP address of one of your worker nodes and `<grafana-nodeport>` and `<prometheus-nodeport>` with the respective NodePort values from the output of the `kubectl get svc` command.
 You can run the following command to get the IP addresses of all the nodes:
 
 ```bash
 kubectl get nodes -o wide
 ```
 
-### Accessing from the Virtual Machine
-
-You can use curl to check if the services are accessible.
+You can use curl to check if the services are accessible:
 
 ```bash
 curl http://<node-ip>:<grafana-nodeport>
 curl http://<node-ip>:<prometheus-nodeport>
 ```
 
-By following these steps, you should be able to access Grafana and Prometheus.
+
+### Accessing Prometheus and Grafana Locally
+
+To run Prometheus locally without Helm, you need to make sure Prometheus is installed, then run `prometheus.exe --config.file=prometheus.yml`.
+
+To run Grafana locally, just download it and it will continually run on your localhost on port 3000 (use a browser to go to 127.0.0.1:3000).
+Then configure a data source to the port Prometheus is running (by default, localhost:9093) and importing the dashboard JSON located in the path *grafana-dashboards/dashbard.json*.
