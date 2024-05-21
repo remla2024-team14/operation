@@ -205,6 +205,8 @@ From the *operation* repository's root, run:
 helm install <YOUR_RELEASE_NAME> ./urlfishing_chart/
 ```
 
+Optionally, you can add the `--dry-run` parameter, which will not directly apply anything to the cluster.
+
 This should output something like:
 
 ```
@@ -217,3 +219,9 @@ TEST SUITE: None
 ```
 
 All defined Pods and Services should be visible in your Minikube dashboard or terminal, as shown in section above.
+
+To clean up your resources, run:
+
+```
+helm uninstall <YOUR_RELEASE_NAME>
+```
