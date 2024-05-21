@@ -1,10 +1,9 @@
 # Operation: URL Phishing (REMLA Team 14)
+
 Central repository that contains all information about running the URL Phishing application and operating the cluster.
 
 Later, this repository will also contain information about provisioning and deployment (Vagrant, Ansible, Docker Compose, Kubernetes etc.).
 For now, this repository merely contains a `docker-compose` file, serving as the most simple way to deploy the application for a showcase.
-
-
 
 ## High-level Architecture
 
@@ -16,7 +15,6 @@ Our `app` and `model-service` are released as two separate container images (can
 
 _Source: REMLA 2023/2024 Assignment 2_
 
-
 ### Model-service
 
 _Repository link: https://github.com/remla2024-team14/model-service_
@@ -27,14 +25,12 @@ _Repository link: https://github.com/remla2024-team14/model-service_
 - Depends on `lib-ml` through PyPi
 - Automatic release to GitHub's container registry, with automatic versioning
 
-
 ### Model-training
 
 _Repository link: https://github.com/remla2024-team14/model-training_
 
 - Contains the ML training pipeline for our URL Phising detection application
 - All pre-processing logic is powered by our custom library `lib-ml`
-
 
 ### Lib-ml
 
@@ -44,14 +40,12 @@ _Repository link: https://github.com/remla2024-team14/lib-ml_
 - Versioned automatically
 - Automatically released in PyPi package registry
 
-
 ### Lib-version
 
 _Repository link: https://github.com/remla2024-team14/lib-version_
 
 - A version-aware library that can be asked for the version of the library (see the class `VersionUtil`)
 - The library is released automatically to PyPi
-
 
 ### App-frontend and -service
 
@@ -61,13 +55,11 @@ _Repository link: https://github.com/remla2024-team14/app_
 - Depends on the `lib-version` through PyPi, allowing for displaying its version on the main web page
 - The URL of the `model-service` is configurable as an environment variable
 
-
 For further details about the respective repositories, please navigate to their specific project READMEs.
 
 ## Installations
 
 1. Ensure you have Docker installed: refer to https://docs.docker.com/compose/install/.
-
 2. Clone this central repository.
 
 ```
@@ -104,7 +96,6 @@ operation
     |     ...
 ```
 
-
 ## How to: Start the Application using Docker Compose
 
 From your project's root, simply run the commands below. This is the power of Docker Compose!
@@ -115,7 +106,6 @@ docker-compose up -d
 ```
 
 Here, `-d` instructs Docker to start the container as a background daemon.
-
 
 Upon running `docker ps`, you will see the following two containers being active:
 
@@ -133,10 +123,9 @@ In the form above, users can enter a URL to check, as well as select a model of 
 
 To stop the application, use `docker-compose down`.
 
-
 ## How to: Start the Application using Kubernetes
 
-Firstly, run `eval $(minikube docker-env)` in your terminal to use the Minikube docker-env for the current session. 
+Firstly, run `eval $(minikube docker-env)` in your terminal to use the Minikube docker-env for the current session.
 
 Now, build the *operation-app* and *operation-model-service* images inside this environment in order to allow for the local images to be pulled by Kubernetes. This is similar to what we did above:
 
@@ -149,7 +138,6 @@ Next, use Kubectl to apply our deployment YAML file defining our Deployments, Se
 ```
 kubectl apply -f urlfishing-deployment.yml
 ```
-
 
 In your Minikube dashboard (`minikube dashboard`), the following Deployments and Pods should be visible:
 
@@ -186,21 +174,21 @@ To delete all resources from the cluster, run the following:
 kubectl delete -f urlfishing-deployment.yml
 ```
 
-
 ## How to: Install Helm Charts to K8s Cluster
 
 Similarly to applying our deployment YAML file in the section above, we can install pre-defined Helm templates that come with flexibility (config values defined in `values.yaml`) and reusability.
 
-
 Prerequisites:
+
 - Firstly, ensure you have Helm installed using `helm version`
 - Make sure Minikube is running (`minikube start --driver=docker`)
 - Optionally: open Minikube's dashboard (`minikube dashboard`)
 
-Now, we can install our Helm charts to any K8s cluster, on your host or VM. 
+Now, we can install our Helm charts to any K8s cluster, on your host or VM.
 Note we have separate deployment templates for our model and app, both under *urlfishing_chart*.
 
 From the *operation* repository's root, run:
+
 ```
 helm install <YOUR_RELEASE_NAME> ./urlfishing_chart/
 ```
@@ -230,5 +218,128 @@ helm uninstall <YOUR_RELEASE_NAME>
 
 To run Prometheus locally without Helm, you need to make sure Prometheus is installed, then run `prometheus.exe --config.file=prometheus.yml`.
 
-To run Grafana locally, just download it and it will continually run on your localhost on port 3000 (use a browser to go to 127.0.0.1:3000). 
+To run Grafana locally, just download it and it will continually run on your localhost on port 3000 (use a browser to go to 127.0.0.1:3000).
 Then configure a data source to the port Prometheus is running (by default, localhost:9093) and importing the dashboard JSON located in the path *grafana-dashboards/dashbard.json*.
+
+## Vagrant
+
+_NOTE: unsure if it works for ARM, cause I cannot test it._
+
+Make sure you have Vagrant and VirtualBox/VMWare installed.
+Navigate to the Vagrantfile for ARM or x86 (normal) and run `vagrant up` in terminal. It will create 1 controller node and 2 worker nodes.
+IP has been made static for more convenient later use with Kubernetes.
+
+### Vagrant Config
+
+Controller node IP is:
+
+`CONTROLLER_IP = "192.168.50.10"`
+
+`X = {11, 12}`
+`NETWORK_PREFIX = "192.168.50.X"`
+
+Furthermore, the names are "controller", "node1" and "node2". You can run them by using `vagrant ssh <NAME>` from the directory that contains the Vagrantfile.
+
+To test the communication between the VMs I ran all the VMs on different terminals. You can check the IP of the VM by typing `ip address` on their respective terminals. I then pinged every other VM from one of the other VMs using `ping <IP_ADDRESS>` and I did this for all of them. The result from node1 to node2 looks like this: ![image](https://github.com/remla2024-team14/app/assets/72865119/e8be97a1-d1cc-4311-91da-37469c3874a3).
+
+This following steps provide a detailed guide to set up a multi-node Kubernetes cluster using Ansible and k3d, including the installation of Kubernetes Dashboard, Prometheus, and Grafana.
+
+## Prerequisites
+
+- Ansible installed on your local machine
+- k3d installed on your local machine
+- Vagrant installed and configured with the necessary VMs
+
+## Run the Ansible playbooks
+
+Ensure that the inventory.ini file contains the IP addresses or hostnames of the control and worker nodes, and then run the Playbook.
+
+```bash
+[controller]
+controller ansible_host=<controller_ip>
+
+[nodes]
+node1 ansible_host=<worker1_ip>
+node2 ansible_host=<worker2_ip>
+```
+
+Make sure you run the ansible-playbook command in the root directory of your project so that the inventory file and playbook file are referenced correctly.
+
+```bash
+ansible-playbook -i inventory,ini setup_kubernetes_x86.yml
+ansible-playbook -i inventory.ini setup_monitoring.yml
+```
+
+## Configuring kubectl locally
+
+Copy the kubeconfig file for the control node locally, and then set the environment variables so that the local host can access the Kubernetes cluster.
+
+```bash
+scp user@controller:/home/<user>/.kube/config ~/.kube/config
+```
+
+- The user here is the username on the control node.
+- Execute the following command on the control node to find the location of the kubeconfig file to modify " /home/\<user>/.kube/config "
+
+```bash
+sudo find / -name config
+```
+
+### Setting the environment variable KUBECONFIG
+
+In order for kubectl to find and use this kubeconfig file, you need to set the environment variable KUBECONFIG to point to this file.
+
+```bash
+export KUBECONFIG=~/.kube/config
+```
+
+### Verify that the configuration was successful
+
+You can verify that kubectl is accessing the Kubernetes cluster correctly with the following command.
+
+```bash
+kubectl cluster-info
+```
+
+### Testing Connectivity to the Cluster
+
+Further testing to see the status of all nodes.
+
+```bash
+kubectl get nodes
+```
+
+If configured correctly, you should see a list of all nodes and their status.
+
+## Accessing Services
+
+### List the services to find the NodePort values
+
+```bash
+kubectl get svc -n monitoring
+```
+
+### Access Grafana and Prometheus using the NodePort values
+
+```bash
+Grafana: http://<node-ip>:<grafana-nodeport>
+Prometheus: http://<node-ip>:<prometheus-nodeport>
+```
+
+Replace <node-ip> with the IP address of one of your worker nodes and <grafana-nodeport> and <prometheus-nodeport> with the respective NodePort values from the output of the kubectl get svc command.
+You can run the following command to get the IP addresses of all the nodes:
+
+```bash
+kubectl get nodes -o wide
+```
+
+### Accessing from the Virtual Machine
+
+You can use curl to check if the services are accessible.
+
+```bash
+curl http://<node-ip>:<grafana-nodeport>
+curl http://<node-ip>:<prometheus-nodeport>
+```
+
+By following these steps, you should be able to access Grafana and Prometheus.
