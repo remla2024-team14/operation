@@ -1,0 +1,43 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# DO NOT REMOVE: Monkey patch (https://github.com/hashicorp/vagrant/issues/8878) to fix DHCP error.
+class VagrantPlugins::ProviderVirtualBox::Action::Network
+  def dhcp_server_matches_config?(dhcp_server, config)
+    true
+  end
+end
+
+CONTROLLER_IP = "192.168.56.10"
+NETWORK_PREFIX = "192.168.56."
+WORKER_NODES = 2
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "bento/ubuntu-24.04"
+  config.vm.box_version = "202404.26.0"
+
+  # Configuration for control node
+  config.vm.define "controller" do |controller|
+    controller.vm.hostname = "controller"
+    controller.vm.network "private_network", ip: CONTROLLER_IP
+    controller.vm.provider "virtualbox" do |v|
+      v.name = "controller"
+      v.memory = 4096
+      v.cpus = 1
+    end
+  end
+
+  # Configuration for worker nodes
+  (1..WORKER_NODES).each do |i|
+    config.vm.define "node#{i}" do |node|
+      node.vm.hostname = "node#{i}"
+      node.vm.network "private_network", ip: "#{NETWORK_PREFIX}#{10+i}"
+      node.vm.provider "virtualbox" do |v|
+        v.name = "node#{i}"
+        v.memory = 6144
+        v.cpus = 2
+      end
+    end
+  end
+end
+
