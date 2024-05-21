@@ -55,20 +55,28 @@ https://github.com/remla2024-team14/lib-version/pull/1
 # A3: Operate a Webapp (10%)
 
 -- Dani: --
-Created PR: ...
-Approved PR: ...
+
+Created PR: https://github.com/remla2024-team14/app/pull/6
+
+Approved PR: https://github.com/remla2024-team14/app/pull/5/files
 
 -- Justin: --
-Created PR: ...
-Approved PR: ...
+
+Created PR: https://github.com/remla2024-team14/app/pull/5/files
+
+Approved PR: https://github.com/remla2024-team14/app/pull/7
 
 -- Li Yang: --
-Created PR: ...
-Approved PR: ...
+
+Created PR: https://github.com/remla2024-team14/app/pull/7
+
+Approved PR: https://github.com/remla2024-team14/operation/pull/2
 
 -- Nadine: --
-Created PR: ...
-Approved PR: ...
+
+Created PR: https://github.com/remla2024-team14/operation/pull/2
+
+Approved PR: https://github.com/remla2024-team14/app/pull/6
 
 
 # A4: ML Testing (10%)
