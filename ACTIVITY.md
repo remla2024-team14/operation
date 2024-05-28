@@ -82,20 +82,20 @@ Approved PR: https://github.com/remla2024-team14/app/pull/6
 # A4: ML Testing (10%)
 
 -- Dani: --
-Created PR: ...
-Approved PR: ...
+Created PR: https://github.com/remla2024-team14/model-training/pull/5
+Approved PR: https://github.com/remla2024-team14/model-training/pull/6
 
 -- Justin: --
-Created PR: ...
-Approved PR: ...
+Created PR: https://github.com/remla2024-team14/model-training/pull/4
+Approved PR: https://github.com/remla2024-team14/model-training/pull/7
 
 -- Li Yang: --
-Created PR: ...
-Approved PR: ...
+Created PR: https://github.com/remla2024-team14/model-training/pull/6
+Approved PR: https://github.com/remla2024-team14/model-training/pull/4
 
 -- Nadine: --
-Created PR: ...
-Approved PR: ...
+Created PR: https://github.com/remla2024-team14/model-training/pull/7
+Approved PR: https://github.com/remla2024-team14/model-training/pull/5
 
 
 # A5: Istio Service Mesh (10%)

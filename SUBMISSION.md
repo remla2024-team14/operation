@@ -1,10 +1,16 @@
 # Submission Document
 
-<!-- ## A5: Istio Service Mesh
+## A5: Istio Service Mesh
 
 
-## A4: ML Testing -->
+## A4: ML Testing
 
+- Model-training: https://github.com/remla2024-team14/model-training/tree/a4 
+
+Notes:
+- All subtasks have been implemented
+- The folder and file names under the `/tests` directory indicate the ML Testing category e.g. Feature and Data, Model Development, ML Infrastructure, Monitoring
+- Our README (section "PyTest for ML Testing") explains our test setup and display our obtained results + adequacy metrics
 
 ## A3: Operate a Webapp
 
