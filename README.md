@@ -136,7 +136,7 @@ docker-compose build
 Next, use Kubectl to apply our deployment YAML file defining our Deployments, Services and Ingress.
 
 ```
-kubectl apply -f urlfishing-deployment.yml
+kubectl apply -f k8s-deployment.yml
 ```
 
 In your Minikube dashboard (`minikube dashboard`), the following Deployments and Pods should be visible:
@@ -171,7 +171,7 @@ kubernetes           ClusterIP   10.96.0.1      <none>        443/TCP    6d23h
 To delete all resources from the cluster, run the following:
 
 ```
-kubectl delete -f urlfishing-deployment.yml
+kubectl delete -f k8s-deployment.yml
 ```
 
 ## How to: Install Helm Charts to K8s Cluster
