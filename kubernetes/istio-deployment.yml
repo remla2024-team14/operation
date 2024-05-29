@@ -6,7 +6,7 @@ metadata:
 spec:
   containers:
   - name: model-service
-    image: ghcr.io/remla2024-team14/test:latest
+    image: ghcr.io/remla2024-team14/model-service:latest    # TODO: Dani: make public
     imagePullPolicy: Always
     ports: [ containerPort: 4000 ]
   imagePullSecrets:
@@ -26,7 +26,7 @@ spec:
   containers:
   - name: app
     # Temp test image: ghcr.io/remla2024-team14/model-serving:latest
-    image: ghcr.io/remla2024-team14/test:latest        # TODO: Dani, Justin: ensure the images built for the 2 versions correspond
+    image: ghcr.io/remla2024-team14/app:v1        # TODO: Dani, Justin: ensure the image name pushed by the app CI corresponds
     imagePullPolicy: Always
     ports: [ containerPort: 3000 ]
     env:
@@ -48,7 +48,7 @@ spec:
   containers:
   - name: app
     # Temp test image: ghcr.io/remla2024-team14/model-serving:latest
-    image: ghcr.io/remla2024-team14/test:latest      # TODO: Dani, Justin: ensure the images built for the 2 versions correspond
+    image: ghcr.io/remla2024-team14/app:v2      # TODO: Dani, Justin: ensure the image name pushed by the app CI corresponds
     imagePullPolicy: Always
     ports: [ containerPort: 3000 ]
     env:
