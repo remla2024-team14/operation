@@ -228,6 +228,8 @@ Similarly to a regular Kubernetes deployment, you can now run `kubectl apply -f 
 Again, you can use `kubectl get pods` to check whether everything was succesful.
 When you open the web app in `localhost:3000` and refresh, you will see that 90% of the time, you will be redirected to `app/v1`.
 
+![alt text](images/istio-pods.png)
+
 
 
 ## How to: Setting up Virtual Infrastructure with Vagrant
