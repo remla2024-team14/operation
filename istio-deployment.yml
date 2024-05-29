@@ -7,6 +7,7 @@ spec:
   containers:
   - name: model-service
     image: ghcr.io/remla2024-team14/model-serving:latest
+    imagePullPolicy: Always
     ports: [ containerPort: 4000 ] 
 ---
 apiVersion: v1 
@@ -23,7 +24,8 @@ spec:
   containers:
   - name: app
     # Temp test image: ghcr.io/remla2024-team14/model-serving:latest
-    image: ghcr.io/remla2024-team14/app:v1        # TODO: Dani, Justin: ensure the images built for the 2 versions correspond
+    image: ghcr.io/remla2024-team14/app:latest        # TODO: Dani, Justin: ensure the images built for the 2 versions correspond
+    imagePullPolicy: Always
     ports: [ containerPort: 3000 ]
     env:
       - { name: MODEL_HOST, value: http://fishing-model-serv:5000/predict }   
@@ -42,7 +44,8 @@ spec:
   containers:
   - name: app
     # Temp test image: ghcr.io/remla2024-team14/model-serving:latest
-    image: ghcr.io/remla2024-team14/app:v2      # TODO: Dani, Justin: ensure the images built for the 2 versions correspond
+    image: ghcr.io/remla2024-team14/app:latest      # TODO: Dani, Justin: ensure the images built for the 2 versions correspond
+    imagePullPolicy: Always
     ports: [ containerPort: 3000 ]
     env:
       - { name: MODEL_HOST, value: http://fishing-model-serv:5000/predict }
