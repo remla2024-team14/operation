@@ -18,11 +18,11 @@ metadata:
   name: app-v1
   labels: { app: app, version: v1 } 
 spec:
-  # template:                         # TODO: Justin: Instruct Istio to include custom metrics from the containers
-  #   metadata:
-  #     annotations:
-  #       prometheus.io/scrape: "true"
-  #       prometheus.io/port: "3000"
+  template:
+     metadata:
+       annotations:
+         prometheus.io/scrape: "true"
+         prometheus.io/port: "3000"
   containers:
   - name: app
     # Temp test image: ghcr.io/remla2024-team14/model-serving:latest
@@ -40,11 +40,11 @@ metadata:
   name: app-v2
   labels: { app: app, version: v2 } 
 spec:
-  # template:                         # TODO: Justin: Instruct Istio to include custom metrics from the containers
-  #   metadata:
-  #     annotations:
-  #       prometheus.io/scrape: "true"
-  #       prometheus.io/port: "3000"
+  template:                         
+     metadata:
+       annotations:
+         prometheus.io/scrape: "true"
+         prometheus.io/port: "3000"
   containers:
   - name: app
     # Temp test image: ghcr.io/remla2024-team14/model-serving:latest
