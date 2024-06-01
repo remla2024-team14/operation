@@ -216,6 +216,22 @@ helm uninstall <YOUR_RELEASE_NAME>
 
 
 
+## How to: Istio Deployment
+
+In order to get authorized for pulling Docker images from GHCR, configure a personal GHCR Login Secret by running: 
+```
+kubectl create secret docker-registry ghcr-login-secret --docker-server=https://ghcr.io --docker-username=YOUR_GITHUB_USERNAME --docker-password=YOUR_PAT --docker-email=YOUR_GITHUB_EMAIL 
+```
+
+Similarly to a regular Kubernetes deployment, you can now run `kubectl apply -f istio-deployment.yml` from the `kubernetes` directory.
+
+Again, you can use `kubectl get pods` to check whether everything was succesful.
+When you open the web app in `localhost:3000` and refresh, you will see that 90% of the time, you will be redirected to `app/v1`.
+
+![alt text](images/istio-pods.png)
+
+
+
 ## How to: Setting up Virtual Infrastructure with Vagrant
 
 Make sure you have Vagrant and VirtualBox/VMWare installed.
@@ -313,3 +329,4 @@ To run Prometheus locally without Helm, you need to make sure Prometheus is inst
 
 To run Grafana locally, just download it and it will continually run on your localhost on port 3000 (use a browser to go to 127.0.0.1:3000).
 Then configure a data source to the port Prometheus is running (by default, localhost:9093) and importing the dashboard JSON located in the path *grafana-dashboards/dashbard.json*.
+

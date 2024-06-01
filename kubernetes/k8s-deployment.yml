@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: fishing-model
-        image: operation-model-service  # TODO: use predefined image instead of local? To avoid having to clone app and model-service under operation
+        image: operation-model-service   # TODO: ghcr.io/remla2024-team14/model-serving:latest
         imagePullPolicy: Never  
         ports:
         - containerPort: 4000
@@ -50,7 +50,7 @@ spec:
     spec: 
       containers: 
       - name: fishing-web 
-        image: operation-model-service
+        image: operation-app   # TODO: ghcr.io/remla2024-team14/app:latest
         imagePullPolicy: Never
         ports: 
         - containerPort: 3000
