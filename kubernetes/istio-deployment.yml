@@ -12,25 +12,23 @@ spec:
   imagePullSecrets:
   - name: ghcr-login-secret
 ---
-apiVersion: v1 
+apiVersion: v1
 kind: Pod
 metadata:
   name: app-v1
-  labels: { app: app, version: v1 } 
+  labels: { app: app, version: v1 }
+  annotations:
+    prometheus.io/scrape: "true" # apparently spec.template is not used for pods, so we do this for pods right now. spec.template is for deployment.
+    prometheus.io/port: "3000"
 spec:
-  template:
-     metadata:
-       annotations:
-         prometheus.io/scrape: "true"
-         prometheus.io/port: "3000"
   containers:
   - name: app
     # Temp test image: ghcr.io/remla2024-team14/model-serving:latest
-    image: ghcr.io/remla2024-team14/app:v1        # TODO: Dani, Justin: ensure the image name pushed by the app CI corresponds
+    image: ghcr.io/remla2024-team14/app:latest        # TODO: Dani, Justin: ensure the image name pushed by the app CI corresponds
     imagePullPolicy: Always
     ports: [ containerPort: 3000 ]
     env:
-      - { name: MODEL_HOST, value: http://fishing-model-serv:5000/predict }   
+      - { name: MODEL_HOST, value: http://fishing-model-serv:5000/predict }
   imagePullSecrets:
   - name: ghcr-login-secret
 ---
@@ -38,17 +36,15 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: app-v2
-  labels: { app: app, version: v2 } 
+  labels: { app: app, version: v2 }
+  annotations:
+    prometheus.io/scrape: "true" # apparently spec.template is not used for pods, so we do this for pods right now. spec.template is for deployment.
+    prometheus.io/port: "3000"
 spec:
-  template:                         
-     metadata:
-       annotations:
-         prometheus.io/scrape: "true"
-         prometheus.io/port: "3000"
   containers:
   - name: app
     # Temp test image: ghcr.io/remla2024-team14/model-serving:latest
-    image: ghcr.io/remla2024-team14/app:v2      # TODO: Dani, Justin: ensure the image name pushed by the app CI corresponds
+    image: ghcr.io/remla2024-team14/test:latest      # TODO: Dani, Justin: ensure the image name pushed by the app CI corresponds
     imagePullPolicy: Always
     ports: [ containerPort: 3000 ]
     env:
