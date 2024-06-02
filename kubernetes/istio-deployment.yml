@@ -19,14 +19,14 @@ metadata:
   labels: { app: app, version: v1 }
   annotations:
     prometheus.io/scrape: "true" # apparently spec.template is not used for pods, so we do this for pods right now. spec.template is for deployment.
-    prometheus.io/port: "3000"
+    prometheus.io/port: "6000"
 spec:
   containers:
   - name: app
     # Temp test image: ghcr.io/remla2024-team14/model-serving:latest
-    image: ghcr.io/remla2024-team14/app:latest        # TODO: Dani, Justin: ensure the image name pushed by the app CI corresponds
+    image: ghcr.io/remla2024-team14/app:v1        # TODO: Dani, Justin: ensure the image name pushed by the app CI corresponds
     imagePullPolicy: Always
-    ports: [ containerPort: 3000 ]
+    ports: [ containerPort: 6000 ]
     env:
       - { name: MODEL_HOST, value: http://fishing-model-serv:5000/predict }
   imagePullSecrets:
@@ -39,14 +39,14 @@ metadata:
   labels: { app: app, version: v2 }
   annotations:
     prometheus.io/scrape: "true" # apparently spec.template is not used for pods, so we do this for pods right now. spec.template is for deployment.
-    prometheus.io/port: "3000"
+    prometheus.io/port: "6000"
 spec:
   containers:
   - name: app
     # Temp test image: ghcr.io/remla2024-team14/model-serving:latest
-    image: ghcr.io/remla2024-team14/test:latest      # TODO: Dani, Justin: ensure the image name pushed by the app CI corresponds
+    image: ghcr.io/remla2024-team14/app:v2      # TODO: Dani, Justin: ensure the image name pushed by the app CI corresponds
     imagePullPolicy: Always
-    ports: [ containerPort: 3000 ]
+    ports: [ containerPort: 6000 ]
     env:
       - { name: MODEL_HOST, value: http://fishing-model-serv:5000/predict }
   imagePullSecrets:
@@ -69,7 +69,7 @@ spec:
   selector: 
     app: app
   ports:
-    - { name: http, port: 3000, targetPort: 3000 }
+    - { name: http, port: 6000, targetPort: 6000 }
 ---                                   # Link Gateway to IngressGateway (created on install)
 apiVersion: networking.istio.io/v1beta1 
 kind: Gateway
