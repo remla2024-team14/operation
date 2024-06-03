@@ -352,6 +352,9 @@ Inside the Pod, use the `curl` command to make a request:
 ```bash
 curl -v http://www.external-service.com
 ```
+Replace `http://www.external-service.com` with a valid external service.
+
+*NOTE: You also need to modify the part of the yml file where `external-service.com` appears.*
 ### Verify request traffic
 View Istio logs and monitoring information to verify that traffic is passing through the EgressGateway.
 #### Find the Pod name of the EgressGateway
