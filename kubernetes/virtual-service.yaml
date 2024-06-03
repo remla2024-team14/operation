@@ -1,0 +1,22 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: route-through-egressgateway
+spec:
+  hosts:
+  - www.external-service.com
+  gateways:
+  - mesh
+  - istio-egressgateway
+  http:
+  - match:
+    - gateways:
+      - mesh
+      - istio-egressgateway
+      port: 80
+    route:
+    - destination:
+        host: www.external-service.com
+        port:
+          number: 80
+      weight: 100
