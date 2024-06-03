@@ -109,20 +109,29 @@ Approved PR: https://github.com/remla2024-team14/model-training/pull/5
 # A5: Istio Service Mesh (10%)
 
 -- Dani: --
+
 Created PR: ...
+
 Approved PR: ...
 
 -- Justin: --
+
 Created PR: ...
+
 Approved PR: ...
 
 -- Li Yang: --
-Created PR: ...
-Approved PR: ...
+
+Created PR: https://github.com/remla2024-team14/operation/pull/7
+
+Approved PR: https://github.com/remla2024-team14/operation/pull/6
 
 -- Nadine: --
-Created PR: ...
-Approved PR: ...
+
+Created PR: https://github.com/remla2024-team14/operation/pull/6
+
+Approved PR: https://github.com/remla2024-team14/operation/pull/7
+
 
 
 # A6: Report

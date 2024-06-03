@@ -2,6 +2,15 @@
 
 ## A5: Istio Service Mesh
 
+- Operation: https://github.com/remla2024-team14/model-training/tree/a5
+- App: https://github.com/remla2024-team14/app/tree/a5
+- Model-service: https://github.com/remla2024-team14/model-service/tree/a5
+
+Notes:
+- The README in operation contains info on the Istio deployment (see "How to: Istio deployment") and additional use case (Egress for controlling external requests)
+- Parts not implemented:
+  - Stabilization of user requests
+  - Deployment of two versions of a Service (note we did deploy two versions of our App, but we did not fully understand this requirement)
 
 ## A4: ML Testing
 
