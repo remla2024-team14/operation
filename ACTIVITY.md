@@ -110,15 +110,15 @@ Approved PR: https://github.com/remla2024-team14/model-training/pull/5
 
 -- Dani: --
 
-Created PR: ...
+Created PR: https://github.com/remla2024-team14/app/pull/10
 
-Approved PR: ...
+Approved PR: https://github.com/remla2024-team14/operation/pull/9
 
 -- Justin: --
 
-Created PR: ...
+Created PR: https://github.com/remla2024-team14/operation/pull/9
 
-Approved PR: ...
+Approved PR: https://github.com/remla2024-team14/app/pull/10
 
 -- Li Yang: --
 
