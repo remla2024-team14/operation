@@ -230,7 +230,42 @@ When you open the web app in `localhost:3000` and refresh, you will see that 90%
 
 ![alt text](images/istio-pods.png)
 
+## Additional Use Case: Egress for External Requests
+Navigate to the `kubernetes` directory, use the `kubectl apply -f` command to apply these configuration files.
+```bash
+kubectl apply -f egress-gateway.yaml
+kubectl apply -f egress-destinationrule.yaml
+kubectl apply -f service-entry.yaml
+kubectl apply -f virtual-service.yaml
+```
+### Deploy the test Pod
+Then deploy a test Pod to make external requests and verify that the traffic goes through the EgressGateway.
+Run the following command:
+```bash
+kubectl apply -f curl-pod.yaml
+```
+Run the following code to enter the test Pod and make a request:
+```bash
+kubectl exec -it curl -- /bin/sh
+```
+Inside the Pod, use the `curl` command to make a request:
+```bash
+curl -v http://www.external-service.com
+```
+Replace `http://www.external-service.com` with a valid external service.
 
+*NOTE: You also need to modify the part of the yml file where `www.external-service.com` appears.*
+### Verify request traffic
+View Istio logs and monitoring information to verify that traffic is passing through the EgressGateway.
+#### Find the Pod name of the EgressGateway
+```bash
+kubectl get pods -n istio-system | grep egressgateway
+```
+#### View logs
+```bash
+kubectl logs <egressgateway-pod-name> -n istio-system
+```
+By following these steps, you can verify that traffic flows through the EgressGateway as expected, thus ensuring that the Egress configuration is correct.
 
 ## How to: Setting up Virtual Infrastructure with Vagrant
 
@@ -329,41 +364,4 @@ To run Prometheus locally without Helm, you need to make sure Prometheus is inst
 
 To run Grafana locally, just download it and it will continually run on your localhost on port 3000 (use a browser to go to 127.0.0.1:3000).
 Then configure a data source to the port Prometheus is running (by default, localhost:9093) and importing the dashboard JSON located in the path *grafana-dashboards/dashbard.json*.
-
-## Additional Use Case
-Navigate to the directory istio, use the `kubectl apply -f` command to apply these configuration files.
-```bash
-kubectl apply -f egress-gateway.yaml
-kubectl apply -f egress-destinationrule.yaml
-kubectl apply -f service-entry.yaml
-kubectl apply -f virtual-service.yaml
-```
-### Deploy the test Pod
-Then deploy a test Pod to make external requests and verify that the traffic goes through the EgressGateway.
-Run the following command:
-```bash
-kubectl apply -f curl-pod.yaml
-```
-Run the following code to enter the test Pod and make a request:
-```bash
-kubectl exec -it curl -- /bin/sh
-```
-Inside the Pod, use the `curl` command to make a request:
-```bash
-curl -v http://www.external-service.com
-```
-Replace `http://www.external-service.com` with a valid external service.
-
-*NOTE: You also need to modify the part of the yml file where `www.external-service.com` appears.*
-### Verify request traffic
-View Istio logs and monitoring information to verify that traffic is passing through the EgressGateway.
-#### Find the Pod name of the EgressGateway
-```bash
-kubectl get pods -n istio-system | grep egressgateway
-```
-#### View logs
-```bash
-kubectl logs <egressgateway-pod-name> -n istio-system
-```
-By following these steps, you can verify that traffic flows through the EgressGateway as expected, thus ensuring that the Egress configuration is correct.
 
