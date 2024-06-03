@@ -259,7 +259,7 @@ Replace `http://www.external-service.com` with a valid external service.
 View Istio logs and monitoring information to verify that traffic is passing through the EgressGateway.
 #### Find the Pod name of the EgressGateway
 ```bash
-kubectl get pods -n istio-system | grep egressgateway
+kubectl get pods -n istio-system | Select-String -Pattern "egressgateway"
 ```
 #### View logs
 ```bash
