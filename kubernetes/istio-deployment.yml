@@ -6,7 +6,7 @@ metadata:
 spec:
   containers:
   - name: model-service
-    image: ghcr.io/remla2024-team14/model-service:latest    # TODO: Dani: make public
+    image: ghcr.io/remla2024-team14/model-service:latest  
     imagePullPolicy: Always
     ports: [ containerPort: 4000 ]
   imagePullSecrets:
@@ -18,13 +18,12 @@ metadata:
   name: app-v1
   labels: { app: app, version: v1 }
   annotations:
-    prometheus.io/scrape: "true" # apparently spec.template is not used for pods, so we do this for pods right now. spec.template is for deployment.
+    prometheus.io/scrape: "true"
     prometheus.io/port: "6000"
 spec:
   containers:
   - name: app
-    # Temp test image: ghcr.io/remla2024-team14/model-serving:latest
-    image: ghcr.io/remla2024-team14/app:v1        # TODO: Dani, Justin: ensure the image name pushed by the app CI corresponds
+    image: ghcr.io/remla2024-team14/app:v1   
     imagePullPolicy: Always
     ports: [ containerPort: 6000 ]
     env:
@@ -38,13 +37,12 @@ metadata:
   name: app-v2
   labels: { app: app, version: v2 }
   annotations:
-    prometheus.io/scrape: "true" # apparently spec.template is not used for pods, so we do this for pods right now. spec.template is for deployment.
+    prometheus.io/scrape: "true" 
     prometheus.io/port: "6000"
 spec:
   containers:
   - name: app
-    # Temp test image: ghcr.io/remla2024-team14/model-serving:latest
-    image: ghcr.io/remla2024-team14/app:v2      # TODO: Dani, Justin: ensure the image name pushed by the app CI corresponds
+    image: ghcr.io/remla2024-team14/app:v2    
     imagePullPolicy: Always
     ports: [ containerPort: 6000 ]
     env:
