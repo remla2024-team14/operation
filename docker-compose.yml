@@ -4,9 +4,9 @@ services:
   
   model-service:
     image: ghcr.io/remla2024-team14/model-service:latest
-    # The volumes mapping ensures that changes to your application code are reflected in real-time within the container.
+    # The volumes mapping ensures that changes to your local code is reflected in real-time within the container.
     volumes:
-      - ./model-service:/usr/src/app
+      - ./model-service:/usr/src/model-service
     ports:
       - "4000:5000"
   
