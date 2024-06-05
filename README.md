@@ -66,37 +66,10 @@ For further details about the respective repositories, please navigate to their 
 git clone https://github.com/remla2024-team14/operation.git
 ```
 
-3. Inside this project, clone the following two projects it serves.
-
-```
-git clone https://github.com/remla2024-team14/model-service.git
-git clone https://github.com/remla2024-team14/app.git
-```
-
-This is what your project will look like roughly:
-
-```
-operation
-│   README.md
-│   docker-compose.yml   
-|   urlfishing-deployment.yml
-|   urlfishing_chart
-│
-└──- app
-│   │   app.py
-│   │   Dockerfile
-|   |    ...
-│   │
-│   └───templates
-│       │   ...
-│   
-└─── model-service
-    │   app.py
-    │   Dockerfile
-    |     ...
-```
 
 ## How to: Start the Application using Docker Compose
+
+First make sure you authenticate with GHCR using `docker login ghcr.io -u <YOUR_GITHUB_USERNAME> -p <YOUR_PAT>`.
 
 From your project's root, simply run the commands below. This is the power of Docker Compose!
 
@@ -125,13 +98,15 @@ To stop the application, use `docker-compose down`.
 
 ## How to: Start the Application using Kubernetes
 
-Firstly, run `eval $(minikube docker-env)` in your terminal to use the Minikube docker-env for the current session.
-
-Now, build the *operation-app* and *operation-model-service* images inside this environment in order to allow for the local images to be pulled by Kubernetes. This is similar to what we did above:
-
+In order to get authorized for pulling Docker images from GHCR, configure a personal GHCR Login Secret by running: 
 ```
-docker-compose build
+kubectl create secret docker-registry ghcr-login-secret --docker-server=https://ghcr.io --docker-username=<YOUR_GITHUB_USERNAME>
+--docker-password=<YOUR_PAT>
+--docker-email=<YOUR_GITHUB_EMAIL>
 ```
+
+
+Run `eval $(minikube docker-env)` in your terminal to use the Minikube docker-env for the current session.
 
 Next, use Kubectl to apply our deployment YAML file defining our Deployments, Services and Ingress.
 
@@ -217,11 +192,6 @@ helm uninstall <YOUR_RELEASE_NAME>
 
 
 ## How to: Istio Deployment
-
-In order to get authorized for pulling Docker images from GHCR, configure a personal GHCR Login Secret by running: 
-```
-kubectl create secret docker-registry ghcr-login-secret --docker-server=https://ghcr.io --docker-username=YOUR_GITHUB_USERNAME --docker-password=YOUR_PAT --docker-email=YOUR_GITHUB_EMAIL 
-```
 
 Similarly to a regular Kubernetes deployment, you can now run `kubectl apply -f istio-deployment.yml` from the `kubernetes` directory.
 
