@@ -115,7 +115,7 @@ a7988dbfb1c6   operation-app             "python app.py"   35 seconds ago   Up 3
 ea97335d9dfd   operation-model-service   "flask run"       36 seconds ago   Up 34 seconds   0.0.0.0:5001->5000/tcp   operation-model-service-1
 ```
 
-Now when you navigate to your localhost (e.g. `http://localhost:3000/`) that serves the `app`, you see the UI of our URL Phishing Detection application:
+Now when you navigate to your localhost (e.g. `http://localhost:3001/`) that serves the `app`, you see the UI of our URL Phishing Detection application:
 
 <img src="images/interface-app.png" alt="drawing" width="500"/>
 
