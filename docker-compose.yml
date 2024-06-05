@@ -3,8 +3,8 @@ version: '3'
 services:
   
   model-service:
-    # TODO: image: ghcr.io/remla2024-team14/model-service:latest
-    build: ./model-service
+    image: ghcr.io/remla2024-team14/model-service:latest
+    # build: ./model-service
     # The volumes mapping ensures that changes to your application code are reflected in real-time within the container.
     volumes:
       - ./model-service:/usr/src/app
@@ -12,8 +12,8 @@ services:
       - "4000:5000"
   
   app: 
-    # TODO: image: ghcr.io/remla2024-team14/app:latest 
-    build: ./app
+    image: ghcr.io/remla2024-team14/app:latest 
+    # build: ./app
     volumes:
       - ./app:/usr/src/app
     ports:
