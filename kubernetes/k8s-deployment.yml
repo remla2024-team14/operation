@@ -15,11 +15,13 @@ spec:
         app: fishing-model
     spec:
       containers:
-      - name: fishing-model
-        image: operation-model-service   # TODO: ghcr.io/remla2024-team14/model-serving:latest
-        imagePullPolicy: Never  
+      - name: fishing-model 
+        image: ghcr.io/remla2024-team14/model-service:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 4000
+      imagePullSecrets:
+      - name: ghcr-login-secret
 ---
 apiVersion: v1    # Create service for image operation-model-service
 kind: Service
@@ -50,8 +52,8 @@ spec:
     spec: 
       containers: 
       - name: fishing-web 
-        image: operation-app   # TODO: ghcr.io/remla2024-team14/app:latest
-        imagePullPolicy: Never
+        image: ghcr.io/remla2024-team14/app:latest
+        imagePullPolicy: Always
         ports: 
         - containerPort: 3000
         env: 
@@ -60,6 +62,8 @@ spec:
               configMapKeyRef: 
                 name: my-config   # See ConfigMap defined at bottom
                 key: model.host
+      imagePullSecrets:
+      - name: ghcr-login-secret
 ---
 apiVersion: v1     # Create service for image operation-app
 kind: Service
@@ -89,16 +93,16 @@ metadata:
   name: my-config
 data:
   model.host: "http://fishing-model-serv:5000/predict"
----
-apiVersion: monitoring.coreos.com/v1   # Extension to allows for service discovery feature of Prometheus
-kind: ServiceMonitor
-metadata:
-  name: app-monitoring
-  labels: 
-    release: app-prom      # For discovery of ServiceMonitor by Prometheus
-spec:
-  selector: 
-    matchLabels: 
-      app: fishing-web-serv
-  endpoints:
-  - interval: 1s           # In production, this value would be higher
+# ---
+# apiVersion: monitoring.coreos.com/v1   # Extension to allows for service discovery feature of Prometheus
+# kind: ServiceMonitor
+# metadata:
+#   name: app-monitoring
+#   labels: 
+#     release: app-prom      # For discovery of ServiceMonitor by Prometheus
+# spec:
+#   selector: 
+#     matchLabels: 
+#       app: fishing-web-serv
+#   endpoints:
+#   - interval: 1s           # In production, this value would be higher
