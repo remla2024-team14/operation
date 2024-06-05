@@ -16,10 +16,12 @@ spec:
     spec:
       containers:
       - name: fishing-model
-        image: operation-model-service
-        imagePullPolicy: Never  
+        image: ghcr.io/remla2024-team14/model-service:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: {{ .Values.urlfishing.model.port }}
+      imagePullSecrets:
+        - name: ghcr-login-secret
 ---
 apiVersion: v1    # Create service for image operation-model-service
 kind: Service

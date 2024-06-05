@@ -16,8 +16,8 @@ spec:
     spec: 
       containers: 
       - name: fishing-web 
-        image: operation-model-service
-        imagePullPolicy: Never
+        image: ghcr.io/remla2024-team14/app:latest
+        imagePullPolicy: Always
         ports: 
         - containerPort: {{ .Values.urlfishing.app.port }}
         env: 
@@ -26,6 +26,8 @@ spec:
               configMapKeyRef: 
                 name: my-config   # See ConfigMap defined at bottom
                 key: model.host
+      imagePullSecrets:
+        -  name: ghcr-login-secret
 ---
 apiVersion: v1     # Create service for image operation-app
 kind: Service
