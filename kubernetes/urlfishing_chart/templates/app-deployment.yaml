@@ -57,16 +57,16 @@ metadata:
   name: my-config
 data:
   model.host: {{.Values.urlfishing.model.host}}
----
-apiVersion: monitoring.coreos.com/v1   # Extension to allows for service discovery feature of Prometheus
-kind: ServiceMonitor
-metadata:
-  name: app-monitoring
-  labels: 
-    release: app-prom      # For discovery of ServiceMonitor by Prometheus
-spec:
-  selector: 
-    matchLabels: 
-      app: fishing-web-serv
-  endpoints:
-  - interval: 1s           # In production, this value would be higher
+# ---
+# apiVersion: monitoring.coreos.com/v1   # Extension to allows for service discovery feature of Prometheus
+# kind: ServiceMonitor
+# metadata:
+#   name: app-monitoring
+#   labels: 
+#     release: app-prom      # For discovery of ServiceMonitor by Prometheus
+# spec:
+#   selector: 
+#     matchLabels: 
+#       app: fishing-web-serv
+#   endpoints:
+#   - interval: 1s           # In production, this value would be higher
