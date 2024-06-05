@@ -189,7 +189,7 @@ helm uninstall <YOUR_RELEASE_NAME>
 
 
 
-## How to: Istio Deployment
+## How to: Istio Deployment for Continuous Experimentation
 
 Similarly to a regular Kubernetes deployment, you can now run `kubectl apply -f istio-deployment.yml` from the `kubernetes` directory.
 
