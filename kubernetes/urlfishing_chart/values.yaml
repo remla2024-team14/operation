@@ -1,8 +1,0 @@
-urlfishing:
-  model:
-    replicas: 3
-    port: 4000
-    host: "http://fishing-model-serv:5000/predict"
-  app:
-    replicas: 1
-    port: 3000

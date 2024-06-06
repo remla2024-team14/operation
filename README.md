@@ -199,47 +199,50 @@ When you open the web app in `localhost:3000` and refresh, you will see that 90%
 ![alt text](images/istio-pods.png)
 
 
-### Additional Use Case: Egress for External Requests
-Navigate to the `kubernetes` directory, use the `kubectl apply -f` command to apply these configuration files.
+### Additional Use Case: Rate Limiting
+Navigate to the `ratelimit` directory, use the `kubectl apply -f` command to apply these configuration files.
+#### Configure naming space
+Create a new naming space for your service and enable the automatic Sidecar injection of ISTIO. This will ensure that each POD created in the name space will automatically inject the Envoy agent into.
 ```bash
-kubectl apply -f egress-gateway.yaml
-kubectl apply -f egress-destinationrule.yaml
-kubectl apply -f service-entry.yaml
-kubectl apply -f virtual-service.yaml
+kubectl create namespace rl
+kubectl label namespace rl istio-injection=enabled
 ```
-
-#### Deploy the test Pod
-Then deploy a test Pod to make external requests and verify that the traffic goes through the EgressGateway.
-Run the following command:
+#### Deployment service
+First, you need to apply the corresponding YAML configuration file for the HTTPBIN and Sleep services:
 ```bash
-kubectl apply -f curl-pod.yaml
+kubectl apply -f httpbin-statefulset.yaml
+kubectl apply -f sleep-statefulset.yaml
 ```
-Run the following code to enter the test Pod and make a request:
+Verify whether the HTTPBIN and Sleep services are correctly deployed and POD runs normally.
 ```bash
-kubectl exec -it curl -- /bin/sh
+kubectl get pods -n rl
 ```
-Inside the Pod, use the `curl` command to make a request:
+You should be able to see that the POD status of HTTPBIN and Sleep is running.
+
+In order to allow other services to access HTTPBIN and Sleep in the outside or clusters, you need to create a Kubernetes Service for each StateFulset.
 ```bash
-curl -v http://www.external-service.com
+kubectl apply -f httpbin-service.yaml
+kubectl apply -f sleep-service.yaml
 ```
-Replace `http://www.external-service.com` with a valid external service.
-
-*NOTE: You also need to modify the part of the yml file where `www.external-service.com` appears.*
-
-#### Verify request traffic
-View Istio logs and monitoring information to verify that traffic is passing through the EgressGateway.
-
-#### Find the Pod name of the EgressGateway
+#### Apply Envoyfilter CRD
+##### Choose POD and Naming Space
+Select the target pod HTTPBIN in RL named space to apply EnvoyFilter.
+##### Configure EnvoyFilter
+Configure EnvoyFilter for http_filter, apply this filter in the context of Sidecar_inbound
 ```bash
-kubectl get pods -n istio-system | Select-String -Pattern "egressgateway"
+kubectl apply -f httpbin-ratelimit-simple.yaml -n rl
 ```
-
-#### View logs
+#### Verification stream
+Here we use the existing Sleep Pod for testing. First, use the following command to enter the Sleep Pod:
 ```bash
-kubectl logs <egressgateway-pod-name> -n istio-system
+kubectl exec -it sleep-0 -n rl -- sh
 ```
-By following these steps, you can verify that traffic flows through the EgressGateway as expected, thus ensuring that the Egress configuration is correct.
-
+Once you are in the shell of Sleep Pod, run the following command to send 15 requests:
+```bash
+for i in $(seq 1 15); do curl -s -o /dev/null -w "%{http_code}\n" http://httpbin.rl:80/get; done
+```
+Once the execution is completed, you will see the results as shown below
+![alt text](images/ratelimit.png)
 
 
 ## How to: Setting up Virtual Infrastructure with Vagrant
