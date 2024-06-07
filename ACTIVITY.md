@@ -122,7 +122,7 @@ Approved PR: https://github.com/remla2024-team14/app/pull/10
 
 -- Li Yang: --
 
-Created PR: https://github.com/remla2024-team14/operation/pull/7
+Created PR: https://github.com/remla2024-team14/operation/pull/10
 
 Approved PR: https://github.com/remla2024-team14/operation/pull/6
 
