@@ -137,12 +137,18 @@ Approved PR: https://github.com/remla2024-team14/operation/pull/7
 # A6: Report
 
 -- Dani: --
-
+- Experimental Setup
 
 -- Justin: --
+- ML Pipeline
+- ML Testing Design
 
 
 -- Li Yang: --
+- Extension Proposal
+- Additional Use Case (Istio)
 
 
 -- Nadine: --
+- Release Pipeline Documentation
+- Deployment Documentation

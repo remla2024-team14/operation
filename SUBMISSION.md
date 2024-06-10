@@ -1,5 +1,10 @@
 # Submission Document
 
+## A6: Report
+
+Operation contains our report: https://github.com/remla2024-team14/operation
+
+
 ## A5: Istio Service Mesh
 
 - Operation: https://github.com/remla2024-team14/model-training/tree/a5
