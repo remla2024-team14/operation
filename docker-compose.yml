@@ -9,13 +9,16 @@ services:
       - ./model-service:/usr/src/model-service
     ports:
       - "4000:5000"
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
   
   app: 
     image: ghcr.io/remla2024-team14/app:latest 
     volumes:
       - ./app:/usr/src/app
     ports:
-      - "3000:8000"
+      - "3001:8000"
     environment:
       - MODEL_SERVICE_URL=http://model-service:5000/predict
     depends_on:

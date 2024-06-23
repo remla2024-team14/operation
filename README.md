@@ -69,6 +69,15 @@ git clone https://github.com/remla2024-team14/operation.git
 
 First make sure you authenticate with GHCR using `docker login ghcr.io -u <YOUR_GITHUB_USERNAME> -p <YOUR_PAT>`.
 
+To make sure the model-service can access your data stored in AWS S3, set your AWS access key and secret key in your environment.
+
+In terminal run:
+
+```
+$env:AWS_ACCESS_KEY_ID='YOUR_ACCESS_KEY_ID'
+$env:AWS_SECRET_ACCESS_KEY = 'YOUR_SECRET_ACCESS_KEY' 
+```
+
 From your project's root, simply run the commands below. This is the power of Docker Compose!
 
 ```
