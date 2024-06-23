@@ -26,6 +26,8 @@ spec:
     image: ghcr.io/remla2024-team14/app:v1
     imagePullPolicy: Always
     ports: [ containerPort: 8000 ]
+    env:
+      - { name: MODEL_SERVICE_URL, value: http://model-service:5000/predict }
   imagePullSecrets:
   - name: ghcr-login-secret
 ---
@@ -43,6 +45,8 @@ spec:
     image: ghcr.io/remla2024-team14/app:v2
     imagePullPolicy: Always
     ports: [ containerPort: 8000 ]
+    env:
+      - { name: MODEL_SERVICE_URL, value: http://model-service:5000/predict }
   imagePullSecrets:
   - name: ghcr-login-secret
 ---                                  # We need to define 2 Services to make the services accessible
