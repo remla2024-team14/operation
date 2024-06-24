@@ -203,6 +203,9 @@ helm uninstall <YOUR_RELEASE_NAME>
 Similarly to a regular Kubernetes deployment, you can now run `kubectl apply -f istio-deployment.yml` from the `kubernetes` directory.
 
 Again, you can use `kubectl get pods` to check whether everything was succesful.
+
+To assign an external IP to your Pods (for access the web app from outside the cluster), run `minikube tunnel`. This external IP is displayed upon running `kubectl get services`.
+
 When you open the web app in `localhost:8000` and refresh, you will see that 90% of the time, you will be redirected to `app/v1`.
 
 ![alt text](images/istio-pods.png)
@@ -210,6 +213,7 @@ When you open the web app in `localhost:8000` and refresh, you will see that 90%
 
 ### Additional Use Case: Rate Limiting
 Navigate to the `ratelimit` directory, use the `kubectl apply -f` command to apply these configuration files.
+
 #### Configure naming space
 Create a new naming space for your service and enable the automatic Sidecar injection of ISTIO. This will ensure that each POD created in the name space will automatically inject the Envoy agent into.
 ```bash
