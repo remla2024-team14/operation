@@ -69,6 +69,15 @@ git clone https://github.com/remla2024-team14/operation.git
 
 First make sure you authenticate with GHCR using `docker login ghcr.io -u <YOUR_GITHUB_USERNAME> -p <YOUR_PAT>`.
 
+To make sure the model-service can access your data stored in AWS S3, set your AWS access key and secret key in your environment.
+
+In terminal run:
+
+```
+$env:AWS_ACCESS_KEY_ID='YOUR_ACCESS_KEY_ID'
+$env:AWS_SECRET_ACCESS_KEY = 'YOUR_SECRET_ACCESS_KEY' 
+```
+
 From your project's root, simply run the commands below. This is the power of Docker Compose!
 
 ```
@@ -82,11 +91,11 @@ Upon running `docker ps`, you will see the following two containers being active
 
 ```
 CONTAINER ID   IMAGE                     COMMAND           CREATED          STATUS          PORTS                    NAMES
-a7988dbfb1c6   operation-app             "python app.py"   35 seconds ago   Up 34 seconds   0.0.0.0:3000->8000/tcp   operation-app-1
+a7988dbfb1c6   operation-app             "python app.py"   35 seconds ago   Up 34 seconds   0.0.0.0:3001->8000/tcp   operation-app-1
 ea97335d9dfd   operation-model-service   "flask run"       36 seconds ago   Up 34 seconds   0.0.0.0:5001->5000/tcp   operation-model-service-1
 ```
 
-Now when you navigate to your localhost (e.g. `http://localhost:3000/`) that serves the `app`, you see the UI of our URL Phishing Detection application:
+Now when you navigate to your localhost (e.g. `http://localhost:3001/`) that serves the `app`, you see the UI of our URL Phishing Detection application:
 
 <img src="images/interface-app.png" alt="drawing" width="500"/>
 
@@ -194,7 +203,7 @@ helm uninstall <YOUR_RELEASE_NAME>
 Similarly to a regular Kubernetes deployment, you can now run `kubectl apply -f istio-deployment.yml` from the `kubernetes` directory.
 
 Again, you can use `kubectl get pods` to check whether everything was succesful.
-When you open the web app in `localhost:3000` and refresh, you will see that 90% of the time, you will be redirected to `app/v1`.
+When you open the web app in `localhost:8000` and refresh, you will see that 90% of the time, you will be redirected to `app/v1`.
 
 ![alt text](images/istio-pods.png)
 
