@@ -210,6 +210,21 @@ When you open the web app in `localhost:8000` and refresh, you will see that 90%
 
 ![alt text](images/istio-pods.png)
 
+### Stabilized User Requests
+
+User requests are stabilized by setting heading information in our *VirtualService* that is responsible for handling all incoming requests from the *Gateway*. 
+This can be verified by making various Postman requests:
+
+![alt text](images/istio-stable-user1.png)
+
+Repeatedly making this request will return version 1 any time. 
+
+Now we can alter the header value for `x-user-id`. As can be seen, version 2 of the app is returned now. Again, this is a "sticky session".
+
+![alt text](images/istio-stable-user2.png)
+
+
+
 
 ### Additional Use Case: Rate Limiting
 Navigate to the `ratelimit` directory, use the `kubectl apply -f` command to apply these configuration files.
