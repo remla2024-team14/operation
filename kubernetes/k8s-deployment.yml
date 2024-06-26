@@ -55,9 +55,9 @@ spec:
         image: ghcr.io/remla2024-team14/app:latest
         imagePullPolicy: Always
         ports: 
-        - containerPort: 3005
+        - containerPort: 8000
         env: 
-          - name: MODEL_HOST
+          - name: MODEL_SERVICE_URL
             valueFrom:
               configMapKeyRef: 
                 name: my-config   # See ConfigMap defined at bottom
@@ -70,11 +70,12 @@ kind: Service
 metadata: 
   name: fishing-web-serv
 spec:
+  type: LoadBalancer
   selector: 
     app: fishing-web   # App defined in Deployment above
   ports: 
-    - port: 3005
-      targetPort: 3005
+    - port: 8000
+      targetPort: 8000
 ---
 apiVersion: networking.k8s.io/v1   # Create an Ingress for the application (to expose the ClusterIP service)
 kind: Ingress
@@ -85,7 +86,7 @@ spec:
     service: 
       name: fishing-web-serv 
       port: 
-        number: 3005
+        number: 8000
 ---
 apiVersion: v1   # Create a ConfigMap and introduce the required env vars in the "app" deployment
 kind: ConfigMap
