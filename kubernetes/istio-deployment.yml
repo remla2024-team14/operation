@@ -27,7 +27,7 @@ spec:
     imagePullPolicy: Always
     ports: [ containerPort: 8000 ]
     env:
-      - { name: MODEL_SERVICE_URL, value: http://model-service:5001/predict }
+      - { name: MODEL_SERVICE_URL, value: http://127.0.0.1:5001/predict }
   imagePullSecrets:
   - name: ghcr-login-secret
 ---
@@ -46,7 +46,7 @@ spec:
     imagePullPolicy: Always
     ports: [ containerPort: 8000 ]
     env:
-      - { name: MODEL_SERVICE_URL, value: http://model-service:5001/predict }
+      - { name: MODEL_SERVICE_URL, value: http://127.0.0.1:5001/predict }
   imagePullSecrets:
   - name: ghcr-login-secret
 ---                                  # We need to define 2 Services to make the services accessible
