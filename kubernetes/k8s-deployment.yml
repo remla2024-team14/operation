@@ -79,7 +79,7 @@ spec:
 apiVersion: networking.k8s.io/v1   # Create an Ingress for the application (to expose the ClusterIP service)
 kind: Ingress
 metadata: 
-  name: my-ingress
+  name: fishing-gateway
 spec: 
   defaultBackend:
     service: 
