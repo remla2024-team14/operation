@@ -332,6 +332,7 @@ Copy the kubeconfig file for the control node locally, and then set the environm
 
 In order for Kubectl to find and use this kubeconfig file, you need to set the environment variable KUBECONFIG to point to this file: `export KUBECONFIG=~/.kube/config`.
 
+In vagrant@controller you can now run commands to check kubectl with `kubectl`
 You can verify that Kubectl is accessing the Kubernetes cluster correctly with the following command: `kubectl cluster-info`.
 
 ### Testing Connectivity to the Cluster
@@ -348,8 +349,8 @@ List the services to find the NodePort values: `kubectl get svc -n monitoring`.
 - Prometheus: `http://<node-ip>:<prometheus-nodeport>`
 
 
-Replace `<node-ip>` with the IP address of one of your worker nodes and `<grafana-nodeport>` and `<prometheus-nodeport>` with the respective NodePort values from the output of the `kubectl get svc` command.
-You can run the following command to get the IP addresses of all the nodes:
+Replace `<node-ip>` with the internal IP address of one of your worker nodes and `<grafana-nodeport>` and `<prometheus-nodeport>` with the respective NodePort values from the output of the `kubectl get svc` command.
+You can run the following command to get the internal IP addresses of all the nodes:
 
 ```bash
 kubectl get nodes -o wide
