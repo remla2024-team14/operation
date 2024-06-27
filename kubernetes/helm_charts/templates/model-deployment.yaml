@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment    # Create deployment for image operation-model-service
+metadata: 
+  name: fishing-model-depl
+  labels: 
+    app: fishing-model
+spec: 
+  replicas: {{ .Values.urlfishing.model.replicas }}
+  selector:
+    matchLabels:
+      app: fishing-model
+  template:
+    metadata: 
+      labels:
+        app: fishing-model
+    spec:
+      containers:
+      - name: fishing-model
+        image: ghcr.io/remla2024-team14/model-service:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: {{ .Values.urlfishing.model.port }}
+      imagePullSecrets:
+        - name: ghcr-login-secret
+---
+apiVersion: v1    # Create service for image operation-model-service
+kind: Service
+metadata: 
+  name: fishing-model-serv
+spec: 
+  selector: 
+    app: fishing-model       # App defined in Deployment above
+  ports: 
+    - port: {{ .Values.urlfishing.model.port }}
+      targetPort: {{ .Values.urlfishing.model.port }}
